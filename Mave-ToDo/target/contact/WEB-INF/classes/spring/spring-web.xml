@@ -21,10 +21,46 @@
 
 
     <!--启用 mvc 的常用注解-->
-    <mvc:annotation-driven validator="myValidator" />
-
+   <!-- <mvc:annotation-driven  />-->
+    <!-- 处理SpringMVC返回json乱码 -->
+    <mvc:annotation-driven validator="myValidator">
+        <mvc:message-converters>
+            <!--StringHttpMessageConverter继承了AbstractHttpMessageConverter
+            在客户端向服务器请求时，发送的格式可能是ISO_8859_1，那么想要修改拜编码格式就就要使用到实现类
+            StringHttpMessageConverter-->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <!--设置编码格式-->
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <!--属性-->
+                <property name="objectMapper">
+                    <!--这是一个类-->
+                    <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+                        <!--看英文的意思是 失败 在 空的 Beans-->
+                        <!--在Bean为空的时候失败, 如果设置为true， 传入的字符串为空可能会报错-->
+                        <!--不想报错我们可以把failOnEmptyBeans设置为false-->
+                        <property name="failOnEmptyBeans" value="false"/>
+                        <!--设置类型转换器，从字符串转为日期-->
+                        <property name="dateFormat">
+                            <!--自定义日期格式-->
+                            <bean class="java.text.SimpleDateFormat">
+                                <constructor-arg value="yyyy年MM月dd"/>
+                            </bean>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
     <!--将所有的静态资源交还 Servlet 处理-->
     <mvc:default-servlet-handler />
+
+
 
     <!--类型转换器-->
 <!--

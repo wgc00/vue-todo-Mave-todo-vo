@@ -6,15 +6,11 @@ import com.wgc.todo.exception.DatabaseException;
 import com.wgc.todo.service.ToDoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import java.util.*;
 
 /*如果要测试类的头部一定要加上这两个注解*/
 @RunWith(SpringRunner.class)
@@ -27,14 +23,26 @@ public class ToDoServiceImpTest {
     private TodoMapper todoMapper;
     @Test
     public void deleteByPrimaryKey() {
+        int[] ints = new int[]{12, 345, 567, 45, 04, 34, 2323, 434};
+        Arrays.sort(ints);
+        for (int anInt : ints) {
+            System.out.println(anInt);
+        }
     }
 
     @Test
     public void insert() {
+        String[] s = new String[]{"b", "c", "a", "e", "s", "a"};
+        Arrays.sort(s, Collections.reverseOrder());
+        for (String anInt : s) {
+            System.out.println(anInt);
+        }
+        Arrays.stream(s).sorted().toArray(String[]:: new);
     }
 
     @Test
     public void selectByPrimaryKey() {
+
     }
 
     @Test
@@ -55,5 +63,18 @@ public class ToDoServiceImpTest {
 
     @Test
     public void selectState() {
+        List<String> objects = new ArrayList<>();
+        objects.add("ddd");
+        objects.add("bbb");
+        objects.add(0, "eee");
+        for (String object : objects) {
+            System.out.println(object);
+        }
+
+
     }
+  /*  private List<String> ret(int i, String str) {
+        List<String> list = new ArrayList<>();
+
+    }*/
 }
